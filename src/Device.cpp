@@ -1,49 +1,37 @@
 #include "Device.hpp"
-#include <vector>
+#include "ValLayers.hpp"
+#include "SwapChain.hpp"
+
 #include <map>
+#include <set>
+#include <string>
 
-bool QueueFamilyIndices::isComplete(void)
+
+const stringVector Device::deviceExtensions =
 {
-    return graphicsFamily.has_value();
-}
+    VK_KHR_SWAPCHAIN_EXTENSION_NAME
+};
 
 
-QueueFamilyIndices Device::findQueueFamilies(VkPhysicalDevice device)
-{
-    QueueFamilyIndices indices;
-    
-    uint32_t queueFamilyCount = 0;
-    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, nullptr);
-    std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
-    vkGetPhysicalDeviceQueueFamilyProperties(device, &queueFamilyCount, queueFamilies.data());
-    
-    uint32_t idx = 0;
-    for (const auto& queueFamily : queueFamilies)
-    {
-        if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
-        {
-            indices.graphicsFamily = idx;
-        }
-        
-        if (indices.isComplete())
-        {
-            break;
-        }
-
-        idx++;
-    }
-    
-    return indices;
-}
-
-
-int Device::rateDeviceSuitability(VkPhysicalDevice device)
+int Device::rateDeviceSuitability(const VkPhysicalDevice device, const VkSurfaceKHR surface)
 {
     VkPhysicalDeviceProperties deviceProperties;
     vkGetPhysicalDeviceProperties(device, &deviceProperties);
     
     VkPhysicalDeviceFeatures deviceFeatures;
     vkGetPhysicalDeviceFeatures(device, &deviceFeatures);
+    
+    
+    if (!isDeviceSuitable(device, surface))
+    {
+        return 0;
+    }
+    
+    // geometryShader is not supported in Metal API
+    if (!deviceFeatures.tessellationShader or !deviceFeatures.sampleRateShading)
+    {
+        return 0;
+    }
     
     int score = 0;
 
@@ -54,52 +42,57 @@ int Device::rateDeviceSuitability(VkPhysicalDevice device)
 
     score += deviceProperties.limits.maxImageDimension2D;
 
-    // geometryShader is not supported in Metal API
-    if (!deviceFeatures.tessellationShader or !deviceFeatures.sampleRateShading)
-    {
-        return 0;
-    }
-
     return score;
 }
 
 
-bool Device::isDeviceSuitable(VkPhysicalDevice device)
+bool Device::isDeviceSuitable(const VkPhysicalDevice device, const VkSurfaceKHR surface)
 {
-    QueueFamilyIndices indices = findQueueFamilies(device);
-
-    return indices.isComplete();
+    QueueFamilyIndices indices = Queue::findQueueFamilies(device, surface);
+    SwapChainSupportDetails swapChainSupport = SwapChain::querySwapChainSupport(device, surface);
+    
+    bool isSuitable = true;
+    isSuitable &= indices.isComplete();
+    isSuitable &= checkDeviceExtensionSupport(device);
+    isSuitable &= !swapChainSupport.surfaceFormats.empty();
+    isSuitable &= !swapChainSupport.presentModes.empty();
+    
+    return isSuitable;
 }
 
 
-void Device::populateDeviceQueueCreateInfo(VkDeviceQueueCreateInfo& createInfo, const QueueFamilyIndices& indices)
+bool Device::checkDeviceExtensionSupport(const VkPhysicalDevice device)
 {
-    createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-    createInfo.queueFamilyIndex = indices.graphicsFamily.value();
-    createInfo.queueCount = 1;
-    float queuePriority = 1.0f;
-    createInfo.pQueuePriorities = &queuePriority;
+    uint32_t extensionCount;
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
+    std::vector<VkExtensionProperties> availableExtensions(extensionCount);
+    vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, availableExtensions.data());
+    
+    std::set<std::string> requiredExtensions(deviceExtensions.begin(), deviceExtensions.end());
+
+    for (const auto& extension : availableExtensions)
+    {
+        requiredExtensions.erase(extension.extensionName);
+    }
+
+    return requiredExtensions.empty();
 }
 
 
-void Device::populateDeviceCreateInfo(VkDeviceCreateInfo& createInfo, VkDeviceQueueCreateInfo& queueCreateInfo, VkPhysicalDeviceFeatures& deviceFeatures, std::vector<const char*>& extensions)
+void Device::populateDeviceCreateInfo(VkDeviceCreateInfo& createInfo, const std::vector<VkDeviceQueueCreateInfo>& queueCreateInfos, const VkPhysicalDeviceFeatures& deviceFeatures, stringVector& extensions)
 {
     createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-    createInfo.pQueueCreateInfos = &queueCreateInfo;
-    createInfo.queueCreateInfoCount = 1;
+    createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
+    createInfo.pQueueCreateInfos = queueCreateInfos.data();
     createInfo.pEnabledFeatures = &deviceFeatures;
-    createInfo.enabledExtensionCount = 0;
     
     if (MOLTEN_VK)
     {
         extensions.emplace_back("VK_KHR_portability_subset");
-        createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
-        createInfo.ppEnabledExtensionNames = extensions.data();
     }
-    else
-    {
-        createInfo.enabledExtensionCount = 0;
-    }
+    
+    createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
+    createInfo.ppEnabledExtensionNames = extensions.data();
     
     if (enableValidationLayers)
     {
@@ -112,7 +105,7 @@ void Device::populateDeviceCreateInfo(VkDeviceCreateInfo& createInfo, VkDeviceQu
 }
 
 
-void Device::pickPhysicalDevice(VkInstance instance)
+void Device::pickPhysicalDevice(const VkInstance instance, const VkSurfaceKHR surface)
 {
     uint32_t deviceCount = 0;
     vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
@@ -127,13 +120,14 @@ void Device::pickPhysicalDevice(VkInstance instance)
 
     for (const auto& device : devices)
     {
-        int score = rateDeviceSuitability(device);
+        int score = rateDeviceSuitability(device, surface);
         candidates.insert(std::make_pair(score, device));
     }
 
     if (candidates.rbegin()->first > 0)
     {
         physicalDevice = candidates.rbegin()->second;
+        qIndices = Queue::findQueueFamilies(physicalDevice, surface);
     } else
     {
         throw std::runtime_error("Failed to find a suitable GPU!");
@@ -141,34 +135,30 @@ void Device::pickPhysicalDevice(VkInstance instance)
 }
 
 
-void Device::createLogicalDevice(VkQueue graphicsQueue, const VkAllocationCallbacks* pAllocator)
+void Device::createLogicalDevice(const VkAllocationCallbacks* pAllocator)
 {
-    QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
-    
-    VkDeviceQueueCreateInfo queueCreateInfo{};
-    populateDeviceQueueCreateInfo(queueCreateInfo, indices);
+    std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
+    Queue::populateDeviceQueueCreateInfo(queueCreateInfos, qIndices);
     
     VkDeviceCreateInfo createInfo{};
     VkPhysicalDeviceFeatures deviceFeatures{};
-    std::vector<const char*> extensions{};
-    populateDeviceCreateInfo(createInfo, queueCreateInfo, deviceFeatures, extensions);
+    stringVector extensions{deviceExtensions};
+    populateDeviceCreateInfo(createInfo, queueCreateInfos, deviceFeatures, extensions);
     
     if (vkCreateDevice(physicalDevice, &createInfo, pAllocator, &logicalDevice) != VK_SUCCESS)
     {
         throw std::runtime_error("Failed to create logical device!");
     }
-    
-    vkGetDeviceQueue(logicalDevice, indices.graphicsFamily.value(), 0, &graphicsQueue);
 }
 
 
-void Device::setupDevices(VkInstance instance, VkQueue graphicsQueue, const VkAllocationCallbacks* pAllocator)
+void Device::setupDevices(const VkInstance instance, const VkSurfaceKHR surface, const VkAllocationCallbacks* pAllocator)
 {
-    pickPhysicalDevice(instance);
+    pickPhysicalDevice(instance, surface);
     
     if (physicalDevice != VK_NULL_HANDLE)
     {
-        createLogicalDevice(graphicsQueue, pAllocator);
+        createLogicalDevice(pAllocator);
     }
 }
 
@@ -180,3 +170,22 @@ void Device::destroyDevices(const VkAllocationCallbacks* pAllocator)
         vkDestroyDevice(logicalDevice, pAllocator);
     }
 }
+
+
+const VkDevice Device::getLogicalDevice(void) const
+{
+    return logicalDevice;
+}
+
+
+const VkPhysicalDevice Device::getPhysicalDevice(void) const
+{
+    return physicalDevice;
+}
+
+
+const QueueFamilyIndices Device::getQIndices(void) const
+{
+    return qIndices;
+}
+

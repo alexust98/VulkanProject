@@ -7,109 +7,100 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8207278928B5A6E6004894E2 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8207278828B5A6E5004894E2 /* main.cpp */; };
-		8207279A28B5BACB004894E2 /* ValLayers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8207279928B5BAC9004894E2 /* ValLayers.cpp */; };
-		8207279C28B66722004894E2 /* Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8207279B28B66721004894E2 /* Device.cpp */; };
-		8231C8B128B1B05200582929 /* libvulkan.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8231C8B028B1B05100582929 /* libvulkan.1.dylib */; };
-		8231C8B228B1B05800582929 /* libvulkan.1.3.216.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8231C8AE28B1AEC000582929 /* libvulkan.1.3.216.dylib */; };
-		8231C8B428B1B1B600582929 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8231C8B328B1B1B500582929 /* libglfw.3.3.dylib */; };
-		8231C8B628B1B30B00582929 /* libglfw.3.3.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8231C8B528B1B30A00582929 /* libglfw.3.3.dylib */; };
-		8231C8B828B1B33900582929 /* libvulkan.1.3.216.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8231C8B728B1B33800582929 /* libvulkan.1.3.216.dylib */; };
-		8231C8BB28B1B38E00582929 /* libvulkan.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8231C8BA28B1B38C00582929 /* libvulkan.1.dylib */; };
+		828A109E28BA96B40096E823 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 828A109D28BA96B40096E823 /* main.cpp */; };
+		828A10A128BA98640096E823 /* libvulkan.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 828A10A028BA98640096E823 /* libvulkan.1.dylib */; };
+		828A10A328BA98690096E823 /* libvulkan.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 828A10A228BA98690096E823 /* libvulkan.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		828A10A528BA986F0096E823 /* libvulkan.1.3.216.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 828A10A428BA986F0096E823 /* libvulkan.1.3.216.dylib */; };
+		828A10A728BA98740096E823 /* libvulkan.1.3.216.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 828A10A628BA98740096E823 /* libvulkan.1.3.216.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		828A10A928BA98CB0096E823 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 828A10A828BA98CB0096E823 /* libglfw.3.3.dylib */; };
+		828A10AB28BA98D00096E823 /* libglfw.3.3.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 828A10AA28BA98D00096E823 /* libglfw.3.3.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		828A10AD28BA99250096E823 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 828A10AC28BA99250096E823 /* Window.cpp */; };
+		828A10AF28BA992D0096E823 /* ValLayers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 828A10AE28BA992D0096E823 /* ValLayers.cpp */; };
+		828A10B128BA99360096E823 /* Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 828A10B028BA99360096E823 /* Device.cpp */; };
+		828A10B328BA993C0096E823 /* Queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 828A10B228BA993C0096E823 /* Queue.cpp */; };
+		828A10B528BA99440096E823 /* SwapChain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 828A10B428BA99440096E823 /* SwapChain.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		8231C89D28B1A77E00582929 /* CopyFiles */ = {
+		828A108B28BA95B70096E823 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8231C8B628B1B30B00582929 /* libglfw.3.3.dylib in CopyFiles */,
-				8231C8BB28B1B38E00582929 /* libvulkan.1.dylib in CopyFiles */,
-				8231C8B828B1B33900582929 /* libvulkan.1.3.216.dylib in CopyFiles */,
+				828A10A328BA98690096E823 /* libvulkan.1.dylib in CopyFiles */,
+				828A10A728BA98740096E823 /* libvulkan.1.3.216.dylib in CopyFiles */,
+				828A10AB28BA98D00096E823 /* libglfw.3.3.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8207278828B5A6E5004894E2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		8207278A28B5A70B004894E2 /* bin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bin; sourceTree = "<group>"; };
-		8207278B28B5A70C004894E2 /* test */ = {isa = PBXFileReference; lastKnownFileType = folder; path = test; sourceTree = "<group>"; };
-		8207278C28B5A70D004894E2 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
-		8207278D28B5A70F004894E2 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
-		8207279928B5BAC9004894E2 /* ValLayers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValLayers.cpp; path = src/ValLayers.cpp; sourceTree = "<group>"; };
-		8207279B28B66721004894E2 /* Device.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Device.cpp; path = src/Device.cpp; sourceTree = "<group>"; };
-		8231C89F28B1A77E00582929 /* Vulkan */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Vulkan; sourceTree = BUILT_PRODUCTS_DIR; };
-		8231C8AA28B1A9DC00582929 /* Users */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Users; path = ../../../..; sourceTree = "<group>"; };
-		8231C8AC28B1AAB600582929 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lib; path = ../../../../../usr/local/lib; sourceTree = "<group>"; };
-		8231C8AE28B1AEC000582929 /* libvulkan.1.3.216.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.3.216.dylib; path = ../../../VulkanSDK/1.3.216.0/macOS/lib/libvulkan.1.3.216.dylib; sourceTree = "<group>"; };
-		8231C8B028B1B05100582929 /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../VulkanSDK/1.3.216.0/macOS/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
-		8231C8B328B1B1B500582929 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../opt/homebrew/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
-		8231C8B528B1B30A00582929 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../../opt/homebrew/Cellar/glfw/3.3.8/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
-		8231C8B728B1B33800582929 /* libvulkan.1.3.216.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.3.216.dylib; path = ../../../VulkanSDK/1.3.216.0/macOS/lib/libvulkan.1.3.216.dylib; sourceTree = "<group>"; };
-		8231C8B928B1B35700582929 /* libvulkan.1.3.216.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.3.216.dylib; path = ../../../VulkanSDK/1.3.216.0/macOS/lib/libvulkan.1.3.216.dylib; sourceTree = "<group>"; };
-		8231C8BA28B1B38C00582929 /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../VulkanSDK/1.3.216.0/macOS/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
+		828A108D28BA95B70096E823 /* Vulkan */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Vulkan; sourceTree = BUILT_PRODUCTS_DIR; };
+		828A109728BA96670096E823 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
+		828A109828BA96770096E823 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+		828A109D28BA96B40096E823 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		828A10A028BA98640096E823 /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../../usr/local/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
+		828A10A228BA98690096E823 /* libvulkan.1.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.dylib; path = ../../../../usr/local/lib/libvulkan.1.dylib; sourceTree = "<group>"; };
+		828A10A428BA986F0096E823 /* libvulkan.1.3.216.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.3.216.dylib; path = ../../../../usr/local/lib/libvulkan.1.3.216.dylib; sourceTree = "<group>"; };
+		828A10A628BA98740096E823 /* libvulkan.1.3.216.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libvulkan.1.3.216.dylib; path = ../../../../usr/local/lib/libvulkan.1.3.216.dylib; sourceTree = "<group>"; };
+		828A10A828BA98CB0096E823 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../opt/homebrew/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
+		828A10AA28BA98D00096E823 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../opt/homebrew/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
+		828A10AC28BA99250096E823 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Window.cpp; path = src/Window.cpp; sourceTree = "<group>"; };
+		828A10AE28BA992D0096E823 /* ValLayers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ValLayers.cpp; path = src/ValLayers.cpp; sourceTree = "<group>"; };
+		828A10B028BA99360096E823 /* Device.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Device.cpp; path = src/Device.cpp; sourceTree = "<group>"; };
+		828A10B228BA993C0096E823 /* Queue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Queue.cpp; path = src/Queue.cpp; sourceTree = "<group>"; };
+		828A10B428BA99440096E823 /* SwapChain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SwapChain.cpp; path = src/SwapChain.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8231C89C28B1A77E00582929 /* Frameworks */ = {
+		828A108A28BA95B70096E823 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8231C8B428B1B1B600582929 /* libglfw.3.3.dylib in Frameworks */,
-				8231C8B128B1B05200582929 /* libvulkan.1.dylib in Frameworks */,
-				8231C8B228B1B05800582929 /* libvulkan.1.3.216.dylib in Frameworks */,
+				828A10A128BA98640096E823 /* libvulkan.1.dylib in Frameworks */,
+				828A10A528BA986F0096E823 /* libvulkan.1.3.216.dylib in Frameworks */,
+				828A10A928BA98CB0096E823 /* libglfw.3.3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8207278E28B5A723004894E2 /* lib */ = {
+		828A108428BA95B70096E823 = {
 			isa = PBXGroup;
 			children = (
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		8231C89628B1A77E00582929 = {
-			isa = PBXGroup;
-			children = (
-				8207279B28B66721004894E2 /* Device.cpp */,
-				8207279928B5BAC9004894E2 /* ValLayers.cpp */,
-				8207278A28B5A70B004894E2 /* bin */,
-				8207278D28B5A70F004894E2 /* include */,
-				8207278C28B5A70D004894E2 /* src */,
-				8207278B28B5A70C004894E2 /* test */,
-				8207278E28B5A723004894E2 /* lib */,
-				8207278828B5A6E5004894E2 /* main.cpp */,
-				8231C8BA28B1B38C00582929 /* libvulkan.1.dylib */,
-				8231C8B728B1B33800582929 /* libvulkan.1.3.216.dylib */,
-				8231C8B928B1B35700582929 /* libvulkan.1.3.216.dylib */,
-				8231C8B528B1B30A00582929 /* libglfw.3.3.dylib */,
-				8231C8A028B1A77E00582929 /* Products */,
-				8231C8A928B1A9CD00582929 /* Frameworks */,
+				828A10B428BA99440096E823 /* SwapChain.cpp */,
+				828A10B228BA993C0096E823 /* Queue.cpp */,
+				828A10B028BA99360096E823 /* Device.cpp */,
+				828A10AE28BA992D0096E823 /* ValLayers.cpp */,
+				828A10AC28BA99250096E823 /* Window.cpp */,
+				828A10AA28BA98D00096E823 /* libglfw.3.3.dylib */,
+				828A10A628BA98740096E823 /* libvulkan.1.3.216.dylib */,
+				828A10A228BA98690096E823 /* libvulkan.1.dylib */,
+				828A109D28BA96B40096E823 /* main.cpp */,
+				828A109828BA96770096E823 /* src */,
+				828A109728BA96670096E823 /* include */,
+				828A108E28BA95B70096E823 /* Products */,
+				828A109F28BA98640096E823 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		8231C8A028B1A77E00582929 /* Products */ = {
+		828A108E28BA95B70096E823 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8231C89F28B1A77E00582929 /* Vulkan */,
+				828A108D28BA95B70096E823 /* Vulkan */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8231C8A928B1A9CD00582929 /* Frameworks */ = {
+		828A109F28BA98640096E823 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8231C8B328B1B1B500582929 /* libglfw.3.3.dylib */,
-				8231C8B028B1B05100582929 /* libvulkan.1.dylib */,
-				8231C8AE28B1AEC000582929 /* libvulkan.1.3.216.dylib */,
-				8231C8AC28B1AAB600582929 /* lib */,
-				8231C8AA28B1A9DC00582929 /* Users */,
+				828A10A828BA98CB0096E823 /* libglfw.3.3.dylib */,
+				828A10A428BA986F0096E823 /* libvulkan.1.3.216.dylib */,
+				828A10A028BA98640096E823 /* libvulkan.1.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -117,13 +108,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8231C89E28B1A77E00582929 /* Vulkan */ = {
+		828A108C28BA95B70096E823 /* Vulkan */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8231C8A628B1A77E00582929 /* Build configuration list for PBXNativeTarget "Vulkan" */;
+			buildConfigurationList = 828A109428BA95B70096E823 /* Build configuration list for PBXNativeTarget "Vulkan" */;
 			buildPhases = (
-				8231C89B28B1A77E00582929 /* Sources */,
-				8231C89C28B1A77E00582929 /* Frameworks */,
-				8231C89D28B1A77E00582929 /* CopyFiles */,
+				828A108928BA95B70096E823 /* Sources */,
+				828A108A28BA95B70096E823 /* Frameworks */,
+				828A108B28BA95B70096E823 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -131,24 +122,24 @@
 			);
 			name = Vulkan;
 			productName = Vulkan;
-			productReference = 8231C89F28B1A77E00582929 /* Vulkan */;
+			productReference = 828A108D28BA95B70096E823 /* Vulkan */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		8231C89728B1A77E00582929 /* Project object */ = {
+		828A108528BA95B70096E823 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1340;
 				TargetAttributes = {
-					8231C89E28B1A77E00582929 = {
+					828A108C28BA95B70096E823 = {
 						CreatedOnToolsVersion = 13.4.1;
 					};
 				};
 			};
-			buildConfigurationList = 8231C89A28B1A77E00582929 /* Build configuration list for PBXProject "Vulkan" */;
+			buildConfigurationList = 828A108828BA95B70096E823 /* Build configuration list for PBXProject "Vulkan" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -156,31 +147,34 @@
 				en,
 				Base,
 			);
-			mainGroup = 8231C89628B1A77E00582929;
-			productRefGroup = 8231C8A028B1A77E00582929 /* Products */;
+			mainGroup = 828A108428BA95B70096E823;
+			productRefGroup = 828A108E28BA95B70096E823 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8231C89E28B1A77E00582929 /* Vulkan */,
+				828A108C28BA95B70096E823 /* Vulkan */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		8231C89B28B1A77E00582929 /* Sources */ = {
+		828A108928BA95B70096E823 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8207279C28B66722004894E2 /* Device.cpp in Sources */,
-				8207279A28B5BACB004894E2 /* ValLayers.cpp in Sources */,
-				8207278928B5A6E6004894E2 /* main.cpp in Sources */,
+				828A109E28BA96B40096E823 /* main.cpp in Sources */,
+				828A10AD28BA99250096E823 /* Window.cpp in Sources */,
+				828A10AF28BA992D0096E823 /* ValLayers.cpp in Sources */,
+				828A10B128BA99360096E823 /* Device.cpp in Sources */,
+				828A10B328BA993C0096E823 /* Queue.cpp in Sources */,
+				828A10B528BA99440096E823 /* SwapChain.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		8231C8A428B1A77E00582929 /* Debug */ = {
+		828A109228BA95B70096E823 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -196,7 +190,7 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -238,7 +232,7 @@
 			};
 			name = Debug;
 		};
-		8231C8A528B1A77E00582929 /* Release */ = {
+		828A109328BA95B70096E823 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -254,7 +248,7 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
@@ -289,62 +283,66 @@
 			};
 			name = Release;
 		};
-		8231C8A728B1A77E00582929 /* Debug */ = {
+		828A109528BA95B70096E823 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/,
+					/Users/alexanderustyuzhanin/VulkanSDK/1.3.216.0/macOS/include/,
+					./include/,
+					/opt/homebrew/include/,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/lib,
+					/Users/alexanderustyuzhanin/VulkanSDK/1.3.216.0/macOS/lib/,
 					/opt/homebrew/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYSTEM_HEADER_SEARCH_PATHS = (
-					/usr/local/include,
-					/opt/homebrew/include,
-					./include,
-				);
 			};
 			name = Debug;
 		};
-		8231C8A828B1A77E00582929 /* Release */ = {
+		828A109628BA95B70096E823 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/,
+					/Users/alexanderustyuzhanin/VulkanSDK/1.3.216.0/macOS/include/,
+					./include/,
+					/opt/homebrew/include/,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					/usr/local/lib,
+					/Users/alexanderustyuzhanin/VulkanSDK/1.3.216.0/macOS/lib/,
 					/opt/homebrew/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYSTEM_HEADER_SEARCH_PATHS = (
-					/usr/local/include,
-					/opt/homebrew/include,
-					./include,
-				);
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8231C89A28B1A77E00582929 /* Build configuration list for PBXProject "Vulkan" */ = {
+		828A108828BA95B70096E823 /* Build configuration list for PBXProject "Vulkan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8231C8A428B1A77E00582929 /* Debug */,
-				8231C8A528B1A77E00582929 /* Release */,
+				828A109228BA95B70096E823 /* Debug */,
+				828A109328BA95B70096E823 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8231C8A628B1A77E00582929 /* Build configuration list for PBXNativeTarget "Vulkan" */ = {
+		828A109428BA95B70096E823 /* Build configuration list for PBXNativeTarget "Vulkan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8231C8A728B1A77E00582929 /* Debug */,
-				8231C8A828B1A77E00582929 /* Release */,
+				828A109528BA95B70096E823 /* Debug */,
+				828A109628BA95B70096E823 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 8231C89728B1A77E00582929 /* Project object */;
+	rootObject = 828A108528BA95B70096E823 /* Project object */;
 }

@@ -1,12 +1,14 @@
 #include <iostream>
 #include <stdexcept>
 #include <cstdlib>
-#include <vector>
 #include <cstring>
 
 #include "Config.hpp"
+#include "Window.hpp"
 #include "ValLayers.hpp"
 #include "Device.hpp"
+#include "Queue.hpp"
+#include "SwapChain.hpp"
 
 
 std::vector<const char*> getRequiredInstanceExtensions(void)
@@ -76,28 +78,19 @@ class HelloTriangleApplication
 public:
     void run(void)
     {
-        initWindow();
+        window.setupWindow();
         initVulkan();
         mainLoop();
         cleanup();
     }
 
 private:
-    GLFWwindow* window;
+    Window window;
     VkInstance instance;
     ValidationLayers VL;
+    Queue queue;
     Device dvc;
-    VkQueue graphicsQueue;
-    
-    
-    void initWindow(void)
-    {
-        glfwInit();
-        
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-        window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan", nullptr, nullptr);
-    }
+    SwapChain swapchain;
     
     
     void createInstance(void)
@@ -127,13 +120,17 @@ private:
     {
         createInstance();
         VL.setupDebugMessenger(instance);
-        dvc.setupDevices(instance, graphicsQueue);
+        window.setupSurface(instance);
+        dvc.setupDevices(instance, window.getSurface());
+        queue.setupQueues(dvc.getLogicalDevice(), dvc.getQIndices());
+        swapchain.setupSwapChain(dvc.getPhysicalDevice(), dvc.getLogicalDevice(), window.window, window.getSurface());
+        swapchain.setupImageViews(dvc.getLogicalDevice());
     }
 
     
     void mainLoop(void)
     {
-        while (!glfwWindowShouldClose(window))
+        while (!glfwWindowShouldClose(window.window))
         {
             glfwPollEvents();
         }
@@ -142,14 +139,17 @@ private:
     
     void cleanup(void)
     {
+        swapchain.destroyImageViews(dvc.getLogicalDevice());
+        swapchain.destroySwapChain(dvc.getLogicalDevice());
         dvc.destroyDevices();
         VL.destroyDebugMessenger(instance);
-
+        window.destroySurface(instance);
         vkDestroyInstance(instance, nullptr);
-        glfwDestroyWindow(window);
+        window.destroyWindow();
         glfwTerminate();
     }
 };
+
 
 int main(void)
 {

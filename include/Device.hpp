@@ -2,37 +2,40 @@
 #define DEVICE_HPP
 
 #include "Config.hpp"
-#include "ValLayers.hpp"
-#include <optional>
-
-struct QueueFamilyIndices
-{
-    std::optional<uint32_t> graphicsFamily;
-    
-    bool isComplete(void);
-};
+#include "Queue.hpp"
 
 
 class Device
 {
 public:
-    void setupDevices(VkInstance instance, VkQueue graphicsQueue, const VkAllocationCallbacks* pAllocator = nullptr);
+    Device() = default;
+    Device(const Device&) =  delete;
+    Device& operator=(const Device&) = delete;
+    Device(Device&&) = delete;
+    Device& operator=(Device&&) = delete;
+    
+    static const stringVector deviceExtensions;
+    
+    void setupDevices(const VkInstance instance, const VkSurfaceKHR surface, const VkAllocationCallbacks* pAllocator = nullptr);
     void destroyDevices(const VkAllocationCallbacks* pAllocator = nullptr);
+    
+    const VkDevice getLogicalDevice(void) const;
+    const VkPhysicalDevice getPhysicalDevice(void) const;
+    const QueueFamilyIndices getQIndices(void) const;
     
 private:
     VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
     VkDevice logicalDevice = VK_NULL_HANDLE;
+    QueueFamilyIndices qIndices;
     
-    QueueFamilyIndices findQueueFamilies(VkPhysicalDevice device);
+    int rateDeviceSuitability(const VkPhysicalDevice device, const VkSurfaceKHR surface);
+    bool isDeviceSuitable(const VkPhysicalDevice device, const VkSurfaceKHR surface);
+    bool checkDeviceExtensionSupport(const VkPhysicalDevice device);
     
-    int rateDeviceSuitability(VkPhysicalDevice device);
-    bool isDeviceSuitable(VkPhysicalDevice device);
+    void populateDeviceCreateInfo(VkDeviceCreateInfo& createInfo, const std::vector<VkDeviceQueueCreateInfo>& queueCreateInfos, const VkPhysicalDeviceFeatures& deviceFeatures, stringVector& extensions);
     
-    void populateDeviceQueueCreateInfo(VkDeviceQueueCreateInfo& createInfo, const QueueFamilyIndices& indices);
-    void populateDeviceCreateInfo(VkDeviceCreateInfo& createInfo, VkDeviceQueueCreateInfo& queueCreateInfo, VkPhysicalDeviceFeatures& deviceFeatures, std::vector<const char*>& extensions);
-    
-    void pickPhysicalDevice(VkInstance instance);
-    void createLogicalDevice(VkQueue graphicsQueue, const VkAllocationCallbacks* pAllocator);
+    void pickPhysicalDevice(const VkInstance instance, const VkSurfaceKHR surface);
+    void createLogicalDevice(const VkAllocationCallbacks* pAllocator);
 };
 
 #endif

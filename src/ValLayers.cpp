@@ -1,8 +1,10 @@
 #include "ValLayers.hpp"
+
 #include <iostream>
+#include <set>
+#include <string>
 
-
-const std::vector<const char*> ValidationLayers::validationLayers = {"VK_LAYER_KHRONOS_validation"};
+const stringVector ValidationLayers::validationLayers = {"VK_LAYER_KHRONOS_validation"};
 
 
 bool ValidationLayers::checkValidationLayerSupport(void)
@@ -11,26 +13,15 @@ bool ValidationLayers::checkValidationLayerSupport(void)
     vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
     std::vector<VkLayerProperties> availableLayers(layerCount);
     vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
+    
+    std::set<std::string> requiredLayers(validationLayers.begin(), validationLayers.end());
 
-    for (const char* layerName : validationLayers)
+    for (const auto& layer : availableLayers)
     {
-        bool layerFound = false;
-
-        for (const auto& layerProperties : availableLayers)
-        {
-            if (strcmp(layerName, layerProperties.layerName) == 0)
-            {
-                layerFound = true;
-                break;
-            }
-        }
-
-        if (!layerFound) {
-            return false;
-        }
+        requiredLayers.erase(layer.layerName);
     }
 
-    return true;
+    return requiredLayers.empty();
 }
 
 
@@ -49,7 +40,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL ValidationLayers::debugCallback(
 }
 
 
-VkResult ValidationLayers::CreateDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator)
+VkResult ValidationLayers::CreateDebugUtilsMessengerEXT(const VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator)
 {
     auto func = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
     
@@ -73,7 +64,7 @@ void ValidationLayers::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCre
 }
 
 
-void ValidationLayers::DestroyDebugUtilsMessengerEXT(VkInstance instance, const VkAllocationCallbacks* pAllocator)
+void ValidationLayers::DestroyDebugUtilsMessengerEXT(const VkInstance instance, const VkAllocationCallbacks* pAllocator)
 {
     auto func = (PFN_vkDestroyDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkDestroyDebugUtilsMessengerEXT");
     
@@ -84,7 +75,7 @@ void ValidationLayers::DestroyDebugUtilsMessengerEXT(VkInstance instance, const 
 }
 
 
-void ValidationLayers::setupDebugMessenger(VkInstance instance, const VkAllocationCallbacks* pAllocator)
+void ValidationLayers::setupDebugMessenger(const VkInstance instance, const VkAllocationCallbacks* pAllocator)
 {
     if (!enableValidationLayers) return;
     
@@ -98,7 +89,7 @@ void ValidationLayers::setupDebugMessenger(VkInstance instance, const VkAllocati
 
 }
 
-void ValidationLayers::destroyDebugMessenger(VkInstance instance, const VkAllocationCallbacks* pAllocator)
+void ValidationLayers::destroyDebugMessenger(const VkInstance instance, const VkAllocationCallbacks* pAllocator)
 {
     if (!enableValidationLayers) return;
     

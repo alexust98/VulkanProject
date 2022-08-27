@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8231C89E28B1A77E00582929"
+               BlueprintIdentifier = "828A108C28BA95B70096E823"
                BuildableName = "Vulkan"
                BlueprintName = "Vulkan"
                ReferencedContainer = "container:Vulkan.xcodeproj">
@@ -44,7 +44,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8231C89E28B1A77E00582929"
+            BlueprintIdentifier = "828A108C28BA95B70096E823"
             BuildableName = "Vulkan"
             BlueprintName = "Vulkan"
             ReferencedContainer = "container:Vulkan.xcodeproj">
@@ -52,13 +52,13 @@
       </BuildableProductRunnable>
       <EnvironmentVariables>
          <EnvironmentVariable
-            key = "VK_ICD_FILENAMES"
-            value = "/Users/alexanderustyuzhanin/VulkanSDK/1.3.216.0/macOS/share/vulkan/icd.d/MoltenVK_icd.json"
+            key = "VK_LAYER_PATH "
+            value = "/Users/alexanderustyuzhanin/VulkanSDK/1.3.216.0/macOS/share/vulkan/explicit_layer.d"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
-            key = "VK_LAYER_PATH"
-            value = "/Users/alexanderustyuzhanin/VulkanSDK/1.3.216.0/macOS/share/vulkan/explicit_layer.d"
+            key = "VK_ICD_FILENAMES"
+            value = "/Users/alexanderustyuzhanin/VulkanSDK/1.3.216.0/macOS/share/vulkan/icd.d/MoltenVK_icd.json"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
@@ -73,7 +73,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8231C89E28B1A77E00582929"
+            BlueprintIdentifier = "828A108C28BA95B70096E823"
             BuildableName = "Vulkan"
             BlueprintName = "Vulkan"
             ReferencedContainer = "container:Vulkan.xcodeproj">
