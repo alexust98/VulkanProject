@@ -5,75 +5,15 @@
 
 #include "Config.hpp"
 #include "Window.hpp"
+#include "Instance.hpp"
 #include "ValLayers.hpp"
 #include "Device.hpp"
 #include "Queue.hpp"
 #include "SwapChain.hpp"
+#include "Pipeline.hpp"
 
 
-std::vector<const char*> getRequiredInstanceExtensions(void)
-{
-    uint32_t glfwExtensionCount = 0;
-    const char** glfwExtensions;
-    glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-
-    std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
-
-    if (enableValidationLayers)
-    {
-        extensions.emplace_back(VK_EXT_DEBUG_UTILS_EXTENSION_NAME);
-    }
-    
-    if (MOLTEN_VK)
-    {
-        extensions.emplace_back(VK_KHR_PORTABILITY_ENUMERATION_EXTENSION_NAME);
-        extensions.emplace_back("VK_KHR_get_physical_device_properties2");
-    }
-
-    return extensions;
-}
-
-
-void populateApplicationInfo(VkApplicationInfo& appInfo)
-{
-    appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-    appInfo.pApplicationName = "Hello Triangle";
-    appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
-    appInfo.pEngineName = "No Engine";
-    appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-    appInfo.apiVersion = VK_API_VERSION_1_0;
-}
-
-
-void populateInstanceCreateInfo(VkInstanceCreateInfo& createInfo, VkApplicationInfo& appInfo, VkDebugUtilsMessengerCreateInfoEXT& debugCreateInfo, std::vector<const char*>& extensions)
-{
-    createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-    createInfo.pApplicationInfo = &appInfo;
-    
-    createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
-    createInfo.ppEnabledExtensionNames = extensions.data();
-    
-    if (MOLTEN_VK)
-    {
-        createInfo.flags |= VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR;
-    }
-    
-    if (enableValidationLayers)
-    {
-        createInfo.enabledLayerCount = static_cast<uint32_t>(ValidationLayers::validationLayers.size());
-        createInfo.ppEnabledLayerNames = ValidationLayers::validationLayers.data();
-        
-        ValidationLayers::populateDebugMessengerCreateInfo(debugCreateInfo);
-        createInfo.pNext = (VkDebugUtilsMessengerCreateInfoEXT*) &debugCreateInfo;
-    } else
-    {
-        createInfo.enabledLayerCount = 0;
-        createInfo.pNext = nullptr;
-    }
-}
-
-
-class HelloTriangleApplication
+class VulkanProject
 {
 public:
     void run(void)
@@ -88,10 +28,11 @@ private:
     Window window;
     VkInstance instance;
     ValidationLayers VL;
+    Device device;
     Queue queue;
-    Device dvc;
-    SwapChain swapchain;
-    
+    SwapChain swapChain;
+    VkRenderPass renderPass;
+    Pipeline pipeline;
     
     void createInstance(void)
     {
@@ -101,16 +42,17 @@ private:
         }
         
         VkApplicationInfo appInfo{};
-        populateApplicationInfo(appInfo);
+        Instance::populateApplicationInfo(appInfo);
         
         VkInstanceCreateInfo createInfo{};
         
         VkDebugUtilsMessengerCreateInfoEXT debugCreateInfo{};
-        std::vector<const char*> extensions = getRequiredInstanceExtensions();
+        stringVector extensions = Instance::getRequiredInstanceExtensions();
         
-        populateInstanceCreateInfo(createInfo, appInfo, debugCreateInfo, extensions);
+        Instance::populateInstanceCreateInfo(createInfo, appInfo, debugCreateInfo, extensions);
         
-        if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS) {
+        if (vkCreateInstance(&createInfo, nullptr, &instance) != VK_SUCCESS)
+        {
             throw std::runtime_error("Failed to create instance!");
         }
     }
@@ -121,10 +63,49 @@ private:
         createInstance();
         VL.setupDebugMessenger(instance);
         window.setupSurface(instance);
-        dvc.setupDevices(instance, window.getSurface());
-        queue.setupQueues(dvc.getLogicalDevice(), dvc.getQIndices());
-        swapchain.setupSwapChain(dvc.getPhysicalDevice(), dvc.getLogicalDevice(), window.window, window.getSurface());
-        swapchain.setupImageViews(dvc.getLogicalDevice());
+        device.setupDevices(instance, window.getSurface());
+        const VkDevice logicalDevice = device.getLogicalDevice();
+        
+        queue.setupQueues(logicalDevice, device.getQIndices());
+        swapChain.setupSwapChain(device.getPhysicalDevice(), logicalDevice , window.window, window.getSurface());
+        swapChain.setupImageViews(logicalDevice);
+        createRenderPass();
+        pipeline.setupGraphicsPipeline(logicalDevice, renderPass);
+    }
+    
+    
+    void createRenderPass(void)
+    {
+        VkAttachmentDescription colorAttachment{};
+        colorAttachment.format = swapChain.getSwapChainConfig().surfaceFormat.format;
+        colorAttachment.samples = VK_SAMPLE_COUNT_1_BIT;
+        colorAttachment.loadOp = VK_ATTACHMENT_LOAD_OP_CLEAR;
+        colorAttachment.storeOp = VK_ATTACHMENT_STORE_OP_STORE;
+        colorAttachment.stencilLoadOp = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+        colorAttachment.stencilStoreOp = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+        colorAttachment.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+        colorAttachment.finalLayout = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;
+        
+        VkAttachmentReference colorAttachmentRef{};
+        colorAttachmentRef.attachment = 0;
+        colorAttachmentRef.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        
+        VkSubpassDescription subpass{};
+        subpass.pipelineBindPoint = VK_PIPELINE_BIND_POINT_GRAPHICS;
+        subpass.colorAttachmentCount = 1;
+        subpass.pColorAttachments = &colorAttachmentRef;
+        
+        VkRenderPassCreateInfo renderPassInfo{};
+        renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
+        renderPassInfo.attachmentCount = 1;
+        renderPassInfo.pAttachments = &colorAttachment;
+        renderPassInfo.subpassCount = 1;
+        renderPassInfo.pSubpasses = &subpass;
+
+        if (vkCreateRenderPass(device.getLogicalDevice(), &renderPassInfo, nullptr, &renderPass) != VK_SUCCESS)
+        {
+            throw std::runtime_error("Failed to create render pass!");
+        }
     }
 
     
@@ -139,9 +120,13 @@ private:
     
     void cleanup(void)
     {
-        swapchain.destroyImageViews(dvc.getLogicalDevice());
-        swapchain.destroySwapChain(dvc.getLogicalDevice());
-        dvc.destroyDevices();
+        const VkDevice logicalDevice = device.getLogicalDevice();
+        
+        pipeline.destroyGraphicsPipeline(logicalDevice);
+        vkDestroyRenderPass(logicalDevice, renderPass, nullptr);
+        swapChain.destroyImageViews(logicalDevice);
+        swapChain.destroySwapChain(logicalDevice);
+        device.destroyDevices();
         VL.destroyDebugMessenger(instance);
         window.destroySurface(instance);
         vkDestroyInstance(instance, nullptr);
@@ -153,7 +138,7 @@ private:
 
 int main(void)
 {
-    HelloTriangleApplication app;
+    VulkanProject app;
 
     try
     {

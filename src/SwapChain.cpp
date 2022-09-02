@@ -83,7 +83,7 @@ VkExtent2D SwapChain::chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilit
 }
 
 
-void SwapChain::populateSwapChainCreateInfo(VkSwapchainCreateInfoKHR& createInfo, const SwapChainSupportDetails swapChainSupport, const VkPhysicalDevice device, const VkSurfaceKHR surface)
+void SwapChain::populateSwapChainCreateInfo(VkSwapchainCreateInfoKHR& createInfo, const SwapChainSupportDetails swapChainSupport, const uint32_t* queueFamilyIndices)
 {
     uint32_t imageCount = swapChainSupport.capabilities.minImageCount + 1;
     if (swapChainSupport.capabilities.maxImageCount > 0 && imageCount > swapChainSupport.capabilities.maxImageCount)
@@ -91,11 +91,8 @@ void SwapChain::populateSwapChainCreateInfo(VkSwapchainCreateInfoKHR& createInfo
         imageCount = swapChainSupport.capabilities.maxImageCount;
     }
     createInfo.minImageCount = imageCount;
-    
-    QueueFamilyIndices indices = Queue::findQueueFamilies(device, surface);
-    uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentFamily.value()};
 
-    if (indices.graphicsFamily != indices.presentFamily)
+    if (queueFamilyIndices[0] != queueFamilyIndices[1])
     {
         createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT;
         createInfo.queueFamilyIndexCount = 2;
@@ -125,7 +122,9 @@ void SwapChain::setupSwapChain(const VkPhysicalDevice physicalDevice, const VkDe
     scConfig.presentMode = chooseSwapPresentMode(swapChainSupport.presentModes);
     
     VkSwapchainCreateInfoKHR createInfo{};
-    populateSwapChainCreateInfo(createInfo, swapChainSupport, physicalDevice, surface);
+    QueueFamilyIndices indices = Queue::findQueueFamilies(physicalDevice, surface);
+    uint32_t queueFamilyIndices[] = {indices.graphicsFamily.value(), indices.presentFamily.value()};
+    populateSwapChainCreateInfo(createInfo, swapChainSupport, queueFamilyIndices);
     
     createInfo.surface = surface;
     createInfo.presentMode = scConfig.presentMode;
@@ -212,4 +211,10 @@ void SwapChain::destroyImageViews(const VkDevice device, std::vector<const VkAll
             vkDestroyImageView(device, imageView, pAllocators[i]);
         }
     }
+}
+
+
+const SwapChainConfig SwapChain::getSwapChainConfig(void) const
+{
+    return scConfig;
 }

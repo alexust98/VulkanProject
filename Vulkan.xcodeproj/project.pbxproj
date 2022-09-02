@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8265087428C16B500011A483 /* Pipeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8265087328C16B500011A483 /* Pipeline.cpp */; };
+		8265087628C16D3D0011A483 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8265087528C16D3D0011A483 /* Utils.cpp */; };
+		8265087828C175ED0011A483 /* Instance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8265087728C175ED0011A483 /* Instance.cpp */; };
 		828A109E28BA96B40096E823 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 828A109D28BA96B40096E823 /* main.cpp */; };
 		828A10A128BA98640096E823 /* libvulkan.1.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 828A10A028BA98640096E823 /* libvulkan.1.dylib */; };
 		828A10A328BA98690096E823 /* libvulkan.1.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 828A10A228BA98690096E823 /* libvulkan.1.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -37,6 +40,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8265087128C0EA850011A483 /* shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = shaders; sourceTree = "<group>"; };
+		8265087328C16B500011A483 /* Pipeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Pipeline.cpp; path = src/Pipeline.cpp; sourceTree = "<group>"; };
+		8265087528C16D3D0011A483 /* Utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Utils.cpp; path = src/Utils.cpp; sourceTree = "<group>"; };
+		8265087728C175ED0011A483 /* Instance.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Instance.cpp; path = src/Instance.cpp; sourceTree = "<group>"; };
 		828A108D28BA95B70096E823 /* Vulkan */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Vulkan; sourceTree = BUILT_PRODUCTS_DIR; };
 		828A109728BA96670096E823 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
 		828A109828BA96770096E823 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
@@ -71,6 +78,10 @@
 		828A108428BA95B70096E823 = {
 			isa = PBXGroup;
 			children = (
+				8265087728C175ED0011A483 /* Instance.cpp */,
+				8265087528C16D3D0011A483 /* Utils.cpp */,
+				8265087328C16B500011A483 /* Pipeline.cpp */,
+				8265087128C0EA850011A483 /* shaders */,
 				828A10B428BA99440096E823 /* SwapChain.cpp */,
 				828A10B228BA993C0096E823 /* Queue.cpp */,
 				828A10B028BA99360096E823 /* Device.cpp */,
@@ -164,10 +175,13 @@
 			files = (
 				828A109E28BA96B40096E823 /* main.cpp in Sources */,
 				828A10AD28BA99250096E823 /* Window.cpp in Sources */,
+				8265087828C175ED0011A483 /* Instance.cpp in Sources */,
 				828A10AF28BA992D0096E823 /* ValLayers.cpp in Sources */,
 				828A10B128BA99360096E823 /* Device.cpp in Sources */,
 				828A10B328BA993C0096E823 /* Queue.cpp in Sources */,
 				828A10B528BA99440096E823 /* SwapChain.cpp in Sources */,
+				8265087628C16D3D0011A483 /* Utils.cpp in Sources */,
+				8265087428C16B500011A483 /* Pipeline.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

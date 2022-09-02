@@ -35,6 +35,8 @@ public:
     void destroySwapChain(const VkDevice device, const VkAllocationCallbacks* pAllocator = nullptr);
     void destroyImageViews(const VkDevice device, std::vector<const VkAllocationCallbacks*> pAllocators = {nullptr});
     
+    const SwapChainConfig getSwapChainConfig(void) const;
+    
 private:
     VkSwapchainKHR swapChain = VK_NULL_HANDLE;
     std::vector<VkImage> swapChainImages;
@@ -45,7 +47,7 @@ private:
     VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
     VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities, GLFWwindow* window);
     
-    void populateSwapChainCreateInfo(VkSwapchainCreateInfoKHR& createInfo, const SwapChainSupportDetails swapChainSupport, const VkPhysicalDevice device, const VkSurfaceKHR surface);
+    void populateSwapChainCreateInfo(VkSwapchainCreateInfoKHR& createInfo, const SwapChainSupportDetails swapChainSupport, const uint32_t* queueFamilyIndices);
     void populateImageViewCreateInfo(VkImageViewCreateInfo& createInfo, const VkImage image);
 };
 
